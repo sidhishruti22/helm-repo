@@ -1,0 +1,10 @@
+apiVersion: config.ocm.software/v1alpha1
+kind: ConfigData
+metadata:
+  name: frontend-config
+localization:
+  - name: image
+    file: values.yaml
+    image: image.repository
+    resource:
+      name: image

@@ -1,0 +1,6 @@
+VERSION: 0.1.2
+NAME: root-ref
+COMPONENT_NAME_PREFIX: github.com/sidhishruti22/root-ref
+PROVIDER: sidhishruti22
+BACKEND_VERSION: 1.1.0
+FRONTEND_VERSION: 1.1.0

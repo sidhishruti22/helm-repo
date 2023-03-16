@@ -1,0 +1,68 @@
+components:
+# Deployable component: microblog-deployment
+# - contains application and references all runtime dependencies
+# - used as root component to deploy the complete application
+# - version numbering scheme follows the main application
+- name: ${COMPONENT_NAME_PREFIX}/root-ref-deployment
+  version: ${VERSION}
+  provider:
+    name: ${PROVIDER}
+  componentReferences:
+  - name: backend-application
+    componentName: github.com/sidhishruti22/backend-application
+    version: ${BACKEND_VERSION}
+  - name: frontend-application
+    componentName: github.com/sidhishruti22/frontend-application 
+    version: ${FRONTEND_VERSION}
+#
+# backend-application Component
+# - runtime dependency, use pre-built images, embeds helm chart
+- name: ${COMPONENT_NAME_PREFIX}/backend-application
+  version: ${BACKEND_VERSION}
+  provider:
+    name: ${PROVIDER}
+  resources:
+  - name: backend-application-chart
+    type: helmChart
+    input:
+      type: helm
+      path: ./backend-charts
+  - name: backend-config
+    type: PlainText
+    input:
+     type: file
+     path: "backend-config.yaml"
+     compress: true    
+  - name: backend-application-image
+    type: ociImage
+    version: ${BACKEND_VERSION}
+    access:
+      type: ociArtifact
+      imageReference: ammar31/database-app
+#
+# Maria-DB Component
+# - runtime dependency, use pre-built images, embeds helm chart
+- name: ${COMPONENT_NAME_PREFIX}/frontend-application
+  version: ${FRONTEND_VERSION}
+  provider:
+    name: ${PROVIDER}
+  resources:
+  - name: frontend-chart
+    type: helmChart
+    input:
+      type: helm
+      path: ./frontend-charts
+  - name: frontend-config
+    type: PlainText
+    input:
+     type: file
+     path: "frontend-config.yaml"
+     compress: true    
+  - name: frontend-image
+    type: ociImage
+    version: ${FRONTEND_VERSION}
+    access:
+      type: ociArtifact
+      imageReference: ammar31/python-django-2.3
+
+
