@@ -32,6 +32,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env: 
+          - name: MYSQL_ROOT_PASSWORD
+            value: mesutOzil31@%
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
